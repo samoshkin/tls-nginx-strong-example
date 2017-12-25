@@ -8,7 +8,7 @@ RUN echo http://dl-2.alpinelinux.org/alpine/edge/community/ >> /etc/apk/reposito
   && usermod -aG ssl nginx
 
 RUN rm -rf /etc/nginx/conf.d \
-  && openssl dhparam -dsaparam -out /etc/nginx/dhparam.pem 4096
+  && openssl dhparam -dsaparam -out /etc/nginx/dhparams.pem 4096
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY conf.d /etc/nginx/conf.d

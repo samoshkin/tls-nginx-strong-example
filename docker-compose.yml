@@ -13,7 +13,7 @@ services:
     build: 
       context: ./nginx
       args:
-        - SSL_GROUP_GID=${SSL_GROUP_GID}
+        - SSL_GROUP_GID=1337
     ports:
       - 80:80
       - 443:443
@@ -22,18 +22,22 @@ services:
       - acme_challenge_webroot:/var/www/acme_challenge_webroot
     command: ['nginx', '-g', 'daemon off;']
   
-  certbot:
+  certgen:
     build:
-      context: ./certbot
+      context: ./certgen
       args:
-        - SSL_GROUP_GID=${SSL_GROUP_GID}
-    entrypoint: /bin/true
+        - SSL_GROUP_GID=1337
+        - RSA_KEY_LENGTH=2048
+        - ECDSA_KEY_LENGTH=ec-256
+    command: ['noop']
     volumes:
       - ssl:/opt/ssl
-      - acme_challenge_webroot:/opt/acme_challenge_webroot
       - letsencrypt:/etc/letsencrypt
-
+      - acme:/etc/acme
+      - acme_challenge_webroot:/opt/acme_challenge_webroot
+      
 volumes:
-  acme_challenge_webroot:
   letsencrypt:
+  acme:
   ssl:
+  acme_challenge_webroot:

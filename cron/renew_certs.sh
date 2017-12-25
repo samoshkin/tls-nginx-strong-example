@@ -11,3 +11,5 @@ docker run \
   -e RENEW=1 \
   --rm \
   ${PREFIX}certbot
+
+# TODO: reload nginx
