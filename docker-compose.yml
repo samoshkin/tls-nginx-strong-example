@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+
+  cron:
+    build: ./cron
+    environment:
+      - PROJECT_NAME=${COMPOSE_PROJECT_NAME}
+    volumes:
+       - /var/run/docker.sock:/var/run/docker.sock:ro
+  
+  nginx:
+    build: 
+      context: ./nginx
+      args:
+        - SSL_GROUP_GID=${SSL_GROUP_GID}
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ssl:/etc/nginx/ssl
+      - acme_challenge_webroot:/var/www/acme_challenge_webroot
+    command: ['nginx', '-g', 'daemon off;']
+  
+  certbot:
+    build:
+      context: ./certbot
+      args:
+        - SSL_GROUP_GID=${SSL_GROUP_GID}
+    entrypoint: /bin/true
+    volumes:
+      - ssl:/opt/ssl
+      - acme_challenge_webroot:/opt/acme_challenge_webroot
+      - letsencrypt:/etc/letsencrypt
+
+volumes:
+  acme_challenge_webroot:
+  letsencrypt:
+  ssl:
