@@ -14,13 +14,24 @@ ssl_session_cache shared:SSL:10m;
 ssl_session_timeout 1h;
 ssl_session_tickets off;
 
-# allow Nginx to send OCSP results during the connection process
+# Enable OCSP stapling and verify it
 ssl_stapling on;
 ssl_stapling_verify on;
 
+# In Docker container we have embedded DNS server at 127.0.0.11
+# Specify resolvers so OCSP stapling request can resolve OCSP servers
+resolver 127.0.0.11 valid=300s ipv6=off;
+resolver_timeout 5s;
+
 # Enable HSTS
 add_header Strict-Transport-Security "max-age=31536000" always;
+
+# enable incl. subdomains
 # add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+# disable HSTS
+# add_header Strict-Transport-Security "max-age=0" always;
+
 
 # Prevent website to be displayed in <iframe> or <object>
 add_header X-Frame-Options DENY;
