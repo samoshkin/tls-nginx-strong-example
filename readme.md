@@ -1,4 +1,4 @@
-# nginx-tls-strong-example
+# tls-nginx-strong-example
 
 Guide and demo of how-to setup strong TLS server-side on Nginx according to security best practices.
 
