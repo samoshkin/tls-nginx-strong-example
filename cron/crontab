@@ -1,1 +1,1 @@
-0 22 * * * RENEW=1 /opt/renew_certs.sh >> /var/log/cron.log 2>&1
+0 22 * * * /opt/renew_certs.sh >> /var/log/cron.log 2>&1

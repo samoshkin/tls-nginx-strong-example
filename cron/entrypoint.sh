@@ -2,18 +2,6 @@
 
 set -eux
 
-# pid=0
-
-# Kill 
-# on_term() {
-#   if [ $pid -ne 0 ]; then
-#     kill -SIGTERM "$pid"
-#     wait "$pid"
-#   fi
-#   exit 143;
-# }
-
-
 # kill last background process (tail) and exit
 # see Trapping signals in Docker containers – Grigorii Chudnov – Medium - https://medium.com/@gchudnov/trapping-signals-in-docker-containers-7a57fdda7d86
 # see https://github.com/renskiy/cron-docker-image

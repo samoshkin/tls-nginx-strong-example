@@ -16,8 +16,7 @@ RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${
   && mv docker/docker /usr/local/bin \
   && rm -rf docker docker-${DOCKER_VERSION}-ce.tgz
 
-
-# Prepare log files, use mkfifo to avoid littering on container writeable layer
+# Prepare log files, use mkfifo to avoid littering at container writeable layer
 RUN mkfifo -m 0666 /var/log/cron.log
 
 # Install crontab

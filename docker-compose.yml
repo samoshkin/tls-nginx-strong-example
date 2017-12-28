@@ -6,6 +6,12 @@ services:
     build: ./cron
     environment:
       - PROJECT_NAME=${COMPOSE_PROJECT_NAME}
+      - SSL_GROUP_ID=${SSL_GROUP_ID}
+      - RSA_KEY_LENGTH=${RSA_KEY_LENGTH}
+      - ECDSA_KEY_LENGTH=${ECDSA_KEY_LENGTH}
+      - DOMAINS=${DOMAINS}
+      - STAGING=${STAGING}
+      - VERBOSE=${VERBOSE}
     volumes:
        - /var/run/docker.sock:/var/run/docker.sock:ro
   
@@ -23,18 +29,20 @@ services:
     command: ['nginx', '-g', 'daemon off;']
   
   certgen:
-    build:
-      context: ./certgen
-      args:
-        - SSL_GROUP_GID=1337
-        - RSA_KEY_LENGTH=2048
-        - ECDSA_KEY_LENGTH=ec-256
+    image: asamoshkin/letsencrypt-certgen:v0.1.0
+    environment:
+      - SSL_GROUP_ID=${SSL_GROUP_ID}
+      - RSA_KEY_LENGTH=${RSA_KEY_LENGTH}
+      - ECDSA_KEY_LENGTH=${ECDSA_KEY_LENGTH}
+      - DOMAINS=${DOMAINS}
+      - STAGING=${STAGING}
+      - VERBOSE=${VERBOSE}
     command: ['noop']
     volumes:
-      - ssl:/opt/ssl
+      - ssl:/var/ssl
       - letsencrypt:/etc/letsencrypt
       - acme:/etc/acme
-      - acme_challenge_webroot:/opt/acme_challenge_webroot
+      - acme_challenge_webroot:/var/acme_challenge_webroot
       
 volumes:
   letsencrypt:
