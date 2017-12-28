@@ -29,7 +29,7 @@ services:
     command: ['nginx', '-g', 'daemon off;']
   
   certgen:
-    image: asamoshkin/letsencrypt-certgen:v0.1.0
+    image: asamoshkin/letsencrypt-certgen:v0.1.1
     environment:
       - SSL_GROUP_ID=${SSL_GROUP_ID}
       - RSA_KEY_LENGTH=${RSA_KEY_LENGTH}
